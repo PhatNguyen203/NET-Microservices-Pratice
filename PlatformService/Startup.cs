@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PlatformService.Data;
 using PlatformService.Data.Repository;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService
 {
@@ -38,6 +39,8 @@ namespace PlatformService
             });
 
             services.AddScoped<IPlatformRepo,PlatformRepo>();
+             services.AddHttpClient<ICommandDataClients, HttpCommandDataClient>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

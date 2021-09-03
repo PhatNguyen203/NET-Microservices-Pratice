@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data;
 using PlatformService.DTOs;
 using PlatformService.Models;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService.Controllers
 {
@@ -13,11 +16,16 @@ namespace PlatformService.Controllers
     {
         private readonly IPlatformRepo _repo;
         private readonly IMapper _mapper;
+        private readonly ICommandDataClients _commandDataClient;
 
-        public PlatformsController(IPlatformRepo repo, IMapper mapper)
+        public PlatformsController(
+            IPlatformRepo repo, 
+            IMapper mapper, 
+            ICommandDataClients commandDataClient)
         {
             _repo = repo;
             _mapper = mapper;
+            _commandDataClient = commandDataClient;
         }
         [HttpGet]
         public ActionResult<IEnumerable<PlatformReadDTO>> GetAllPlatform()
@@ -37,13 +45,25 @@ namespace PlatformService.Controllers
             return NotFound();
         }
         [HttpPost]
-        public ActionResult CreateNewPlatform(PlatformCreateDTO newPlatformDTO)
+         public async Task<ActionResult<PlatformReadDTO>> CreatePlatform(PlatformCreateDTO platformCreateDto)
         {
-            var platform = _mapper.Map<Platform>(newPlatformDTO);
-            _repo.CreatePlatform(platform);
+            var platformModel = _mapper.Map<Platform>(platformCreateDto);
+            _repo.CreatePlatform(platformModel);
             _repo.SaveChanges();
-            var platformDTO = _mapper.Map<PlatformReadDTO>(platform);
-            return CreatedAtRoute(nameof(GetPlatformById), new {Id = platformDTO.Id}, platformDTO );
+
+            var platformReadDto = _mapper.Map<PlatformReadDTO>(platformModel);
+
+            // Send Sync Message
+            try
+            {
+                await _commandDataClient.SendNewPlatformToCommand(platformReadDto);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"--> Could not send synchronously: {ex.Message}");
+            }
+
+            return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformReadDto.Id}, platformReadDto);
         }
     }
 }
