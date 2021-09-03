@@ -2,14 +2,14 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommandService.Controllers
+namespace PlatformsService.Controllers
 {
     [Route("api/command/[controller]")]
     [ApiController]
-    public class CommandsController : ControllerBase 
+    public class PlatformsController : ControllerBase 
     {
         [HttpPost]
-        public ActionResult Post()
+        public ActionResult TestInboundPlatformSync()
         {
             Console.WriteLine("-->POST request from Command is OK");
             
