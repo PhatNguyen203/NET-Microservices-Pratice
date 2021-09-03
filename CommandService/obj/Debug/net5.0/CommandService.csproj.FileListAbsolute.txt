@@ -1,0 +1,7 @@
+C:\Users\Lee0n\OneDrive\Desktop\New folder\net-microservices\CommandService\obj\Debug\net5.0\CommandService.csprojAssemblyReference.cache
+C:\Users\Lee0n\OneDrive\Desktop\New folder\net-microservices\CommandService\obj\Debug\net5.0\CommandService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lee0n\OneDrive\Desktop\New folder\net-microservices\CommandService\obj\Debug\net5.0\CommandService.AssemblyInfoInputs.cache
+C:\Users\Lee0n\OneDrive\Desktop\New folder\net-microservices\CommandService\obj\Debug\net5.0\CommandService.AssemblyInfo.cs
+C:\Users\Lee0n\OneDrive\Desktop\New folder\net-microservices\CommandService\obj\Debug\net5.0\CommandService.csproj.CoreCompileInputs.cache
+C:\Users\Lee0n\OneDrive\Desktop\New folder\net-microservices\CommandService\obj\Debug\net5.0\CommandService.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Lee0n\OneDrive\Desktop\New folder\net-microservices\CommandService\obj\Debug\net5.0\CommandService.MvcApplicationPartsAssemblyInfo.cache
