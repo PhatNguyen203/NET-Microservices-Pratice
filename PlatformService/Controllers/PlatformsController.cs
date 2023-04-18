@@ -33,6 +33,7 @@ namespace PlatformService.Controllers
             var platformsDto = mapper.Map<IEnumerable<PlatformReadDto>>(platforms);
             return Ok(platformsDto);
         }
+
         [HttpGet("{id}", Name ="GetPlatformById")]
         public IActionResult GetPlatformById(int id)
         {
