@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,7 +13,7 @@ spec:
         app: platformservice
     spec:
       containers:
-        - name: platformservice
+        - name: platform
           image: lee0ne203/platformservice:latest
 ---
 apiVersion: v1
