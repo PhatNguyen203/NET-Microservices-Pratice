@@ -54,6 +54,11 @@ namespace CommandService.Data
             return context.Platforms.Any(p => p.Id == id);
         }
 
+        public bool ExternalPlatformExists(int externalPlatformId)
+        {
+            return context.Platforms.Any(p => p.ExternalId == externalPlatformId);
+        }
+
         public bool SaveChanges()
         {
             return (context.SaveChanges() >= 0);
