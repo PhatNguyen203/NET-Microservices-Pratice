@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PlatformService.AsyncDataServices;
 using PlatformService.Data;
 using PlatformService.SyncDataServices.Grpc;
 using PlatformService.SyncDataServices.Http;
@@ -51,6 +52,7 @@ namespace PlatformService
             services.AddScoped<IPlatformRepo, PlatformRepo>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+            services.AddScoped<IMessageClientBus, MessageClientBus>();
             services.AddGrpc();
 
             services.AddControllers();
@@ -69,9 +71,9 @@ namespace PlatformService
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlatformService v1"));
             }
-						Console.WriteLine($"--> CommandService Endpoint {Configuration["CommandService"]}");
+			Console.WriteLine($"--> CommandService Endpoint {Configuration["CommandService"]}");
             
-						//app.UseHttpsRedirection();
+			//app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -82,6 +84,7 @@ namespace PlatformService
                 endpoints.MapControllers();
                 //added grpc endpoints
                 endpoints.MapGrpcService<GrpcPlatformService>();
+
                 endpoints.MapGet("/protos/platforms.proto", async context =>
                 {
                     await context.Response.WriteAsync(File.ReadAllText("Protos/platforms.proto"));
