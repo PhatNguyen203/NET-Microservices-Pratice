@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using CommandService.AsyncDataServices;
 using CommandService.Data;
+using CommandService.EventProcessor;
 using CommandService.SyncDataServices.Grpc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,16 +35,15 @@ namespace CommandService
             services.AddDbContext<CommandDbContext>(options => options.UseInMemoryDatabase("InMem"));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICommandServiceRepo, CommandRepo>();
+            services.AddSingleton<IEventProcessor, EventProcessor.EventProcessor>();
             services.AddScoped<IPlatformDataClient,PlatformDataClient>();
+						
+			services.AddHostedService<MessageBusSubscriber>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommandService", Version = "v1" });
-            });
-            services.AddHttpClient("localhost").ConfigurePrimaryHttpMessageHandler(_ => new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
-
             });
         }
 

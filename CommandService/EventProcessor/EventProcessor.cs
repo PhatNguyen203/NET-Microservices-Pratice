@@ -39,7 +39,7 @@ namespace CommandService.EventProcessor
             //check event type
             switch (eventType.Event)
             {
-                case "Platform_Published":
+                case "Platform Published":
                     Console.WriteLine("--> Platform Published Event Detected");
                     return EventType.PlatformPublished;
                 default:
@@ -52,7 +52,7 @@ namespace CommandService.EventProcessor
         {
             using (var scope = scopeFactory.CreateScope())
             {
-                var repo = scope.ServiceProvider.GetRequiredService<CommandRepo>();
+                var repo = scope.ServiceProvider.GetRequiredService<ICommandServiceRepo>();
                 var platformPublishedDto = JsonSerializer.Deserialize<PlatfomPublishedDto>(platformPublishedMessage);
                 try
                 {
