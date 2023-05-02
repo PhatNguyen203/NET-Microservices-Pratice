@@ -69,7 +69,7 @@ namespace CommandService
             });
 
             //seeding data
-            PrepDb.PopulationData(app);
+           // PrepDb.PopulationData(app);
         }
     }
 }

@@ -9,13 +9,11 @@ namespace PlatformService.AsyncDataServices
 {
     public class MessageClientBus : IMessageClientBus
     {
-        private readonly IConfiguration config;
         private readonly IConnection connection;
         private readonly IModel channel;
 
         public MessageClientBus(IConfiguration config)
         {
-            this.config = config;
             var factory = new ConnectionFactory()
             {
                 HostName = config["RabbitmqHost"],
