@@ -44,9 +44,10 @@ namespace CommandService.AsyncDataServices
 
         private void InitializeRabbitMQ()
         {
-            var factory = new ConnectionFactory() 
-            {   HostName = configuration["RabbitMQHost"], 
-                Port = int.Parse(configuration["RabbitMQPort"]) 
+            var factory = new ConnectionFactory()
+            {   HostName = configuration["RabbitMQHost"],
+                Port = int.Parse(configuration["RabbitMQPort"]),
+                RequestedHeartbeat = TimeSpan.FromSeconds(300),
             };
 
             connection = factory.CreateConnection();

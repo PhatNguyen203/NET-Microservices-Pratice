@@ -21,6 +21,6 @@ metadata:
               pathType: Prefix
               backend:
                 service:
-                  name: commands-clusterip-srv
+                  name: commands-cluster-ip-srv
                   port:
                     number: 80
